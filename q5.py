@@ -14,12 +14,12 @@ data_input10 = pd.read_csv("data_2010.csv")
 
 data_needed16 = data_input16[['FG%','ORB','DRB','TRB','PTS']]
 data_needed17 = data_input17[['FG%','ORB','DRB','TRB','PTS']]
-data_needed15 = data_input16[['FG%','ORB','DRB','TRB','PTS']]
-data_needed14 = data_input16[['FG%','ORB','DRB','TRB','PTS']]
-data_needed13 = data_input16[['FG%','ORB','DRB','TRB','PTS']]
-data_needed12 = data_input16[['FG%','ORB','DRB','TRB','PTS']]
-data_needed11 = data_input16[['FG%','ORB','DRB','TRB','PTS']]
-data_needed10 = data_input16[['FG%','ORB','DRB','TRB','PTS']]
+data_needed15 = data_input15[['FG%','ORB','DRB','TRB','PTS']]
+data_needed14 = data_input14[['FG%','ORB','DRB','TRB','PTS']]
+data_needed13 = data_input13[['FG%','ORB','DRB','TRB','PTS']]
+data_needed12 = data_input12[['FG%','ORB','DRB','TRB','PTS']]
+data_needed11 = data_input11[['FG%','ORB','DRB','TRB','PTS']]
+data_needed10 = data_input10[['FG%','ORB','DRB','TRB','PTS']]
 
 
 def Beta_hatFunction(X,Y):
@@ -73,139 +73,144 @@ print('Beta_hat for 5b:',Beta_hat)
 
 
 #-----------------5c--------------------------------------------------------------
-main_result1 = 0
+main_result = 0
 main_result2 = 0
 main_result3 = 0
 
 
+x_axis = np.array(data_needed16[['FG%','TRB']])
+dump = np.ones(x_axis.shape[0]).reshape(-1,1)
+x_axis = np.hstack((dump,x_axis))
+y_axis = np.array(data_needed16[['PTS']])
+Beta_hat = Beta_hatFunction(x_axis, y_axis)
+print('Beta_hat for 5c(i)',Beta_hat)
 
-def q_5c1():
+x_test = np.array(data_needed17[['FG%','TRB']])
+dump = np.ones(x_test.shape[0]).reshape(-1,1)
+x_test = np.hstack((dump,x_test))
+main_result = x_test.dot(Beta_hat)
 
-	x_axis = np.array(data_needed16[['FG%','TRB']])
-	dump = np.ones(x_axis.shape[0]).reshape(-1,1)
-	x_axis = np.hstack((dump,x_axis))
-	y_axis = np.array(data_needed16[['PTS']])
-	Beta_hat = Beta_hatFunction(x_axis, y_axis)
-	print('Beta_hat for 5c(i)',Beta_hat)
-
-	x_test = np.array(data_needed17[['FG%','TRB']])
-	dump = np.ones(x_test.shape[0]).reshape(-1,1)
-	x_test = np.hstack((dump,x_test))
-	main_result = x_test.dot(Beta_hat)
-
-	expected = np.array(data_needed17[['PTS']])
-	sse = SSE(expected, main_result)
-	print("SSE of 5c(i):",sse)
-	mape = MAPE(expected, main_result)
-	print("MAPE of 5c(i):",mape)
+expected = np.array(data_needed17[['PTS']])
+sse = SSE(expected, main_result)
+print("SSE of 5c(i):",sse)
+mape = MAPE(expected, main_result)
+print("MAPE of 5c(i):",mape)
 
 
-def q_5c2():
+x_axis1 = np.array(data_needed15[['FG%','TRB']])
+x_axis2 = np.array(data_needed16[['FG%','TRB']])
+x_axis1 = np.vstack((x_axis1, x_axis2))
+dump = np.ones(x_axis1.shape[0]).reshape(-1,1)
+x_axis1 = np.hstack((dump,x_axis1))
 
-	x_axis1 = np.array(data_needed15[['FG%','TRB']])
-	x_axis2 = np.array(data_needed16[['FG%','TRB']])
-	x_axis1 = np.vstack((x_axis1, x_axis2))
-	dump = np.ones(x_axis1.shape[0]).reshape(-1,1)
-	x_axis1 = np.hstack((dump,x_axis1))
-
-	y_axis1 = np.array(data_needed15[['PTS']])
-	y_axis2 = np.array(data_needed16[['PTS']])
-	y_axis1 = np.vstack((y_axis1, y_axis2))
-	Beta_hat2 = Beta_hatFunction(x_axis1, y_axis1)
-	print('Beta_hat for 5c(ii)',Beta_hat2)
+y_axis1 = np.array(data_needed15[['PTS']])
+y_axis2 = np.array(data_needed16[['PTS']])
+y_axis1 = np.vstack((y_axis1, y_axis2))
+Beta_hat2 = Beta_hatFunction(x_axis1, y_axis1)
+print('Beta_hat for 5c(ii)',Beta_hat2)
 
 
-	x_test = np.array(data_needed17[['FG%','TRB']])
-	dump = np.ones(x_test.shape[0]).reshape(-1,1)
-	x_test = np.hstack((dump,x_test))
-	main_result2 = x_test.dot(Beta_hat2)
+x_test = np.array(data_needed17[['FG%','TRB']])
+dump = np.ones(x_test.shape[0]).reshape(-1,1)
+x_test = np.hstack((dump,x_test))
+main_result2 = x_test.dot(Beta_hat2)
 
-	expected = np.array(data_needed17[['PTS']])
-	sse = SSE(expected, main_result2)
-	print("SSE of 5c(ii):",SSE(expected, main_result2))
-	mape = MAPE(expected, main_result2)
-	print("MAPE of 5c(ii):",mape)
+expected = np.array(data_needed17[['PTS']])
+sse2 = SSE(expected, main_result2)
+print("SSE of 5c(ii):",SSE(expected, main_result2))
+mape2 = MAPE(expected, main_result2)
+print("MAPE of 5c(ii):",mape2)
 
 
 
-def q_5c3():	
+x_axis1 = np.array(data_needed10[['FG%','TRB']])
+x_axis2 = np.array(data_needed11[['FG%','TRB']])
+x_axis3 = np.array(data_needed12[['FG%','TRB']])
+x_axis4 = np.array(data_needed13[['FG%','TRB']])
+x_axis5 = np.array(data_needed14[['FG%','TRB']])
+x_axis6 = np.array(data_needed15[['FG%','TRB']])
+x_axis7 = np.array(data_needed16[['FG%','TRB']])
 
-	x_axis1 = np.array(data_needed10[['FG%','TRB']])
-	x_axis2 = np.array(data_needed11[['FG%','TRB']])
-	x_axis3 = np.array(data_needed12[['FG%','TRB']])
-	x_axis4 = np.array(data_needed13[['FG%','TRB']])
-	x_axis5 = np.array(data_needed14[['FG%','TRB']])
-	x_axis6 = np.array(data_needed15[['FG%','TRB']])
-	x_axis7 = np.array(data_needed16[['FG%','TRB']])
+x_axis1 = np.vstack((x_axis1,x_axis2,x_axis3,x_axis4,x_axis5,x_axis6,x_axis7))
 
-	x_axis1 = np.vstack((x_axis1,x_axis2,x_axis3,x_axis4,x_axis5,x_axis6,x_axis7))
-
-	dump = np.ones(x_axis1.shape[0]).reshape(-1,1)
-	x_axis1 = np.hstack((dump,x_axis1))
+dump = np.ones(x_axis1.shape[0]).reshape(-1,1)
+x_axis1 = np.hstack((dump,x_axis1))
 
 
-	y_axis1 = np.array(data_needed10[['PTS']])
-	y_axis2 = np.array(data_needed11[['PTS']])
-	y_axis3 = np.array(data_needed12[['PTS']])
-	y_axis4 = np.array(data_needed13[['PTS']])
-	y_axis5 = np.array(data_needed14[['PTS']])
-	y_axis6 = np.array(data_needed15[['PTS']])
-	y_axis7 = np.array(data_needed16[['PTS']])
-	y_axis1 = np.vstack((y_axis1,y_axis2,y_axis3,y_axis4,y_axis5,y_axis6,y_axis7))
-	Beta_hat3 = Beta_hatFunction(x_axis1, y_axis1)
+y_axis1 = np.array(data_needed10[['PTS']])
+y_axis2 = np.array(data_needed11[['PTS']])
+y_axis3 = np.array(data_needed12[['PTS']])
+y_axis4 = np.array(data_needed13[['PTS']])
+y_axis5 = np.array(data_needed14[['PTS']])
+y_axis6 = np.array(data_needed15[['PTS']])
+y_axis7 = np.array(data_needed16[['PTS']])
+y_axis1 = np.vstack((y_axis1,y_axis2,y_axis3,y_axis4,y_axis5,y_axis6,y_axis7))
+Beta_hat3 = Beta_hatFunction(x_axis1, y_axis1)
 
-	x_test = np.array(data_needed17[['FG%','TRB']])
-	dump = np.ones(x_test.shape[0]).reshape(-1,1)
-	x_test = np.hstack((dump,x_test))
-	main_result3 = x_test.dot(Beta_hat3)
+x_test = np.array(data_needed17[['FG%','TRB']])
+dump = np.ones(x_test.shape[0]).reshape(-1,1)
+x_test = np.hstack((dump,x_test))
+main_result3 = x_test.dot(Beta_hat3)
 
-	expected = np.array(data_needed17[['PTS']])
-	sse = SSE(expected, main_result3)
-	print("SSE of 5c(iii):",sse)
-	mape = MAPE(expected, main_result3)
-	print("MAPE of 5c(iii):",mape)
+expected = np.array(data_needed17[['PTS']])
+sse3 = SSE(expected, main_result3)
+print("SSE of 5c(iii):",sse3)
+mape3 = MAPE(expected, main_result3)
+print("MAPE of 5c(iii):",mape3)
 
-q_5c1()
-q_5c2()
-q_5c3()
-
-print (main_result1)
 
 #-----------------5d--------------------------------------------------------------
 
-residual1 = ResidualFn(expected, result1)
-residual2 = compute_residual(result2,actual)
-residual3 = compute_residual(result3,actual)
+residual1 = ResidualFn(expected, main_result)
+residual2 = ResidualFn(expected, main_result2)
+residual3 = ResidualFn(expected, main_result3)
 
 
+plt.figure(figsize=(10,10))
+plt.scatter(main_result, residual1)
+plt.xlabel('PTS')
+plt.ylabel('Residuals - 5d(i)')
+plt.show()
 
 
+plt.figure(figsize=(10,10))
+plt.scatter(main_result2, residual2)
+plt.xlabel('PTS')
+plt.ylabel('Residuals - 5d(ii)')
+plt.show()
+
+plt.figure(figsize=(10,10))
+plt.scatter(main_result3, residual3)
+plt.xlabel('PTS')
+plt.ylabel('Residuals - - 5d(iii)')
+plt.show()
+
+#-----------------5e--------------------------------------------------------------
 
 
+plt.figure(figsize=(10,10))
+plt.hist(residual1, density=True)
+plt.xlabel('Residuals - 5e(i)')
+plt.ylabel('PDF')
+plt.show()
 
 
+plt.figure(figsize=(10,10))
+plt.hist(residual2, density=True)
+plt.xlabel('Residuals - 5e(ii)')
+plt.ylabel('PDF')
+plt.show()
 
+plt.figure(figsize=(10,10))
+plt.hist(residual3, density=True)
+plt.xlabel('Residuals - 5e(iii)')
+plt.ylabel('PDF')
+plt.show()
 
-
-'''
-regr = linear_model.LinearRegression()
-
-regr.fit(x_axis, y_axis)
-
-m = regr.coef_[0]
-b = regr.intercept_
-
-print(' y = {0} * x + {1}'.format(m, b))
-
-
-
-#print (data_input16)
-
-
-plt.scatter(x_axis, y_axis, color='blue')  # you can use test_data_X and test_data_Y instead.
-plt.plot([min(x_axis), max(x_axis)], [b, m*max(x_axis) + b], 'r')
-plt.title('Fitted linear regression', fontsize=16)
-plt.xlabel('x', fontsize=13)
-plt.ylabel('y', fontsize=13)
-
-'''
+##########Inference####################################################
+#Yes, the plots are normal. 
+#Normality is very necessary for residuals. 
+#As for non normal residuals, the error is not consistent over the 
+#entire data set which implies that the prediction is not same across all the dependent variables which is not seen in this case. 
+# Also as we know, the inference varies on the dependencies and the variables associated with it.
+################################################
