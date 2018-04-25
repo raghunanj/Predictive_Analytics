@@ -22,6 +22,20 @@ def Beta_hatFunction(X,Y):
 	beta_hat = var_x.dot(var_y)
 	return(beta_hat)
 
+def SSE(f, f_hat):
+	error = 0
+	for i in range(len(f)):
+		error += np.square(f[i]-f_hat[i])
+	return (error)
+
+def MAPE (f, f_hat):
+	var = 0
+	for i in range(len(f)):
+		var += abs((f[i]-f_hat[i])/f[i])
+	var = (100/len(f))*var
+	return (var)
+
+#---------------5a-----------------------------------------------------------------	
 x_axis = np.array(data_needed16[['FG%','TRB']])
 y_axis = np.array(data_needed16[['PTS']])
 Beta_hat = Beta_hatFunction(x_axis,y_axis)
@@ -33,6 +47,8 @@ print('Beta_hat for 5a:',Beta_hat)
 # TRB contribution of 1.006 is less to PTS when compared to FG% which is 129.63 
 #########################
 
+
+#-----------------5b--------------------------------------------------------------
 x_axis = np.array(data_needed16[['FG%','TRB','ORB','DRB']])
 y_axis = np.array(data_needed16[['PTS']])
 Beta_hat = Beta_hatFunction(x_axis,y_axis)
@@ -42,8 +58,10 @@ print('Beta_hat for 5b:',Beta_hat)
 #######Inference#########
 # TRB contribution is negative in this case. This is caused by the Multicollinearity, 
 # Multicollinearity occurs in this case because we clearly see that ORB + DRB = TRB. 
-
 #########################
+
+
+
 
 
 
