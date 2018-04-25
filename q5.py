@@ -90,11 +90,30 @@ main_result = x_test.dot(Beta_hat)
 expected = np.array(data_needed17[['PTS']])
 sse = SSE(expected, main_result)
 print("SSE of 5c(i):",sse)
-
 mape = MAPE(expected, main_result)
 print("MAPE of 5c(i):",mape)
 
 
+
+x_axis1 = np.array(data_needed15[['FG%','TRB']])
+x_axis2 = np.array(data_needed16[['FG%','TRB']])
+x_axis1 = np.vstack((x_axis1, x_axis2))
+dump = np.ones(x_axis1.shape[0]).reshape(-1,1)
+x_axis1 = np.hstack((dump,x_axis1))
+
+y_axis1 = np.array(data_needed15[['PTS']])
+y_axis2 = np.array(data_needed16[['PTS']])
+y_axis1 = np.vstack((y_axis1, y_axis2))
+Beta_hat = Beta_hatFunction(x_axis1, y_axis1)
+print('Beta_hat for 5c(ii)',Beta_hat)
+
+main_result = x_test.dot(Beta_hat)
+
+expected = np.array(data_needed17[['PTS']])
+sse = SSE(expected, main_result)
+print("SSE of 5c(ii):",sse)
+mape = MAPE(expected, main_result)
+print("MAPE of 5c(ii):",mape)
 
 '''
 regr = linear_model.LinearRegression()
