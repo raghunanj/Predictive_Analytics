@@ -13,6 +13,13 @@ data_input11 = pd.read_csv("data_2011.csv")
 data_input10 = pd.read_csv("data_2010.csv")
 
 data_needed16 = data_input16[['FG%','ORB','DRB','TRB','PTS']]
+data_needed17 = data_input17[['FG%','ORB','DRB','TRB','PTS']]
+data_needed15 = data_input16[['FG%','ORB','DRB','TRB','PTS']]
+data_needed14 = data_input16[['FG%','ORB','DRB','TRB','PTS']]
+data_needed13 = data_input16[['FG%','ORB','DRB','TRB','PTS']]
+data_needed12 = data_input16[['FG%','ORB','DRB','TRB','PTS']]
+data_needed11 = data_input16[['FG%','ORB','DRB','TRB','PTS']]
+data_needed10 = data_input16[['FG%','ORB','DRB','TRB','PTS']]
 
 
 def Beta_hatFunction(X,Y):
@@ -62,7 +69,30 @@ print('Beta_hat for 5b:',Beta_hat)
 
 
 
+#-----------------5c--------------------------------------------------------------
+x_axis = np.array(data_needed16[['FG%','TRB']])
+dump = np.ones(x_axis.shape[0]).reshape(-1,1)
+x_axis = np.hstack((dump,x_axis))
+y_axis = np.array(data_needed16[['PTS']])
+Beta_hat = Beta_hatFunction(x_axis, y_axis)
+print('Beta_hat for 5c(i)',Beta_hat)
 
+
+
+
+x_test = np.array(data_needed17[['FG%','TRB']])
+dump = np.ones(x_test.shape[0]).reshape(-1,1)
+x_test = np.hstack((dump,x_test))
+main_result = x_test.dot(Beta_hat)
+
+
+
+expected = np.array(data_needed17[['PTS']])
+sse = SSE(expected, main_result)
+print("SSE of 5c(i):",sse)
+
+mape = MAPE(expected, main_result)
+print("MAPE of 5c(i):",mape)
 
 
 
