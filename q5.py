@@ -29,6 +29,9 @@ def Beta_hatFunction(X,Y):
 	beta_hat = var_x.dot(var_y)
 	return(beta_hat)
 
+def ResidualFn(f, f_hat):
+	return (f-f_hat)
+
 def SSE(f, f_hat):
 	error = 0
 	for i in range(len(f)):
@@ -70,50 +73,119 @@ print('Beta_hat for 5b:',Beta_hat)
 
 
 #-----------------5c--------------------------------------------------------------
-x_axis = np.array(data_needed16[['FG%','TRB']])
-dump = np.ones(x_axis.shape[0]).reshape(-1,1)
-x_axis = np.hstack((dump,x_axis))
-y_axis = np.array(data_needed16[['PTS']])
-Beta_hat = Beta_hatFunction(x_axis, y_axis)
-print('Beta_hat for 5c(i)',Beta_hat)
+main_result1 = 0
+main_result2 = 0
+main_result3 = 0
+
+
+
+def q_5c1():
+
+	x_axis = np.array(data_needed16[['FG%','TRB']])
+	dump = np.ones(x_axis.shape[0]).reshape(-1,1)
+	x_axis = np.hstack((dump,x_axis))
+	y_axis = np.array(data_needed16[['PTS']])
+	Beta_hat = Beta_hatFunction(x_axis, y_axis)
+	print('Beta_hat for 5c(i)',Beta_hat)
+
+	x_test = np.array(data_needed17[['FG%','TRB']])
+	dump = np.ones(x_test.shape[0]).reshape(-1,1)
+	x_test = np.hstack((dump,x_test))
+	main_result = x_test.dot(Beta_hat)
+
+	expected = np.array(data_needed17[['PTS']])
+	sse = SSE(expected, main_result)
+	print("SSE of 5c(i):",sse)
+	mape = MAPE(expected, main_result)
+	print("MAPE of 5c(i):",mape)
+
+
+def q_5c2():
+
+	x_axis1 = np.array(data_needed15[['FG%','TRB']])
+	x_axis2 = np.array(data_needed16[['FG%','TRB']])
+	x_axis1 = np.vstack((x_axis1, x_axis2))
+	dump = np.ones(x_axis1.shape[0]).reshape(-1,1)
+	x_axis1 = np.hstack((dump,x_axis1))
+
+	y_axis1 = np.array(data_needed15[['PTS']])
+	y_axis2 = np.array(data_needed16[['PTS']])
+	y_axis1 = np.vstack((y_axis1, y_axis2))
+	Beta_hat2 = Beta_hatFunction(x_axis1, y_axis1)
+	print('Beta_hat for 5c(ii)',Beta_hat2)
+
+
+	x_test = np.array(data_needed17[['FG%','TRB']])
+	dump = np.ones(x_test.shape[0]).reshape(-1,1)
+	x_test = np.hstack((dump,x_test))
+	main_result2 = x_test.dot(Beta_hat2)
+
+	expected = np.array(data_needed17[['PTS']])
+	sse = SSE(expected, main_result2)
+	print("SSE of 5c(ii):",SSE(expected, main_result2))
+	mape = MAPE(expected, main_result2)
+	print("MAPE of 5c(ii):",mape)
+
+
+
+def q_5c3():	
+
+	x_axis1 = np.array(data_needed10[['FG%','TRB']])
+	x_axis2 = np.array(data_needed11[['FG%','TRB']])
+	x_axis3 = np.array(data_needed12[['FG%','TRB']])
+	x_axis4 = np.array(data_needed13[['FG%','TRB']])
+	x_axis5 = np.array(data_needed14[['FG%','TRB']])
+	x_axis6 = np.array(data_needed15[['FG%','TRB']])
+	x_axis7 = np.array(data_needed16[['FG%','TRB']])
+
+	x_axis1 = np.vstack((x_axis1,x_axis2,x_axis3,x_axis4,x_axis5,x_axis6,x_axis7))
+
+	dump = np.ones(x_axis1.shape[0]).reshape(-1,1)
+	x_axis1 = np.hstack((dump,x_axis1))
+
+
+	y_axis1 = np.array(data_needed10[['PTS']])
+	y_axis2 = np.array(data_needed11[['PTS']])
+	y_axis3 = np.array(data_needed12[['PTS']])
+	y_axis4 = np.array(data_needed13[['PTS']])
+	y_axis5 = np.array(data_needed14[['PTS']])
+	y_axis6 = np.array(data_needed15[['PTS']])
+	y_axis7 = np.array(data_needed16[['PTS']])
+	y_axis1 = np.vstack((y_axis1,y_axis2,y_axis3,y_axis4,y_axis5,y_axis6,y_axis7))
+	Beta_hat3 = Beta_hatFunction(x_axis1, y_axis1)
+
+	x_test = np.array(data_needed17[['FG%','TRB']])
+	dump = np.ones(x_test.shape[0]).reshape(-1,1)
+	x_test = np.hstack((dump,x_test))
+	main_result3 = x_test.dot(Beta_hat3)
+
+	expected = np.array(data_needed17[['PTS']])
+	sse = SSE(expected, main_result3)
+	print("SSE of 5c(iii):",sse)
+	mape = MAPE(expected, main_result3)
+	print("MAPE of 5c(iii):",mape)
+
+q_5c1()
+q_5c2()
+q_5c3()
+
+print (main_result1)
+
+#-----------------5d--------------------------------------------------------------
+
+residual1 = ResidualFn(expected, result1)
+residual2 = compute_residual(result2,actual)
+residual3 = compute_residual(result3,actual)
 
 
 
 
-x_test = np.array(data_needed17[['FG%','TRB']])
-dump = np.ones(x_test.shape[0]).reshape(-1,1)
-x_test = np.hstack((dump,x_test))
-main_result = x_test.dot(Beta_hat)
 
 
 
-expected = np.array(data_needed17[['PTS']])
-sse = SSE(expected, main_result)
-print("SSE of 5c(i):",sse)
-mape = MAPE(expected, main_result)
-print("MAPE of 5c(i):",mape)
 
 
 
-x_axis1 = np.array(data_needed15[['FG%','TRB']])
-x_axis2 = np.array(data_needed16[['FG%','TRB']])
-x_axis1 = np.vstack((x_axis1, x_axis2))
-dump = np.ones(x_axis1.shape[0]).reshape(-1,1)
-x_axis1 = np.hstack((dump,x_axis1))
-
-y_axis1 = np.array(data_needed15[['PTS']])
-y_axis2 = np.array(data_needed16[['PTS']])
-y_axis1 = np.vstack((y_axis1, y_axis2))
-Beta_hat = Beta_hatFunction(x_axis1, y_axis1)
-print('Beta_hat for 5c(ii)',Beta_hat)
-
-main_result = x_test.dot(Beta_hat)
-
-expected = np.array(data_needed17[['PTS']])
-sse = SSE(expected, main_result)
-print("SSE of 5c(ii):",sse)
-mape = MAPE(expected, main_result)
-print("MAPE of 5c(ii):",mape)
 
 '''
 regr = linear_model.LinearRegression()
