@@ -166,20 +166,20 @@ residual2 = ResidualFn(expected, main_result2)
 residual3 = ResidualFn(expected, main_result3)
 
 
-plt.figure(figsize=(10,10))
+plt.figure('5d(i)', figsize=(6,6))
 plt.scatter(main_result, residual1)
 plt.xlabel('PTS')
 plt.ylabel('Residuals - 5d(i)')
 plt.show()
 
 
-plt.figure(figsize=(10,10))
+plt.figure('5d(ii)',figsize=(6,6))
 plt.scatter(main_result2, residual2)
 plt.xlabel('PTS')
 plt.ylabel('Residuals - 5d(ii)')
 plt.show()
 
-plt.figure(figsize=(10,10))
+plt.figure('5d(iii)',figsize=(6,6))
 plt.scatter(main_result3, residual3)
 plt.xlabel('PTS')
 plt.ylabel('Residuals - - 5d(iii)')
@@ -188,20 +188,20 @@ plt.show()
 #-----------------5e--------------------------------------------------------------
 
 
-plt.figure(figsize=(10,10))
+plt.figure('5e(i)', figsize=(6,6))
 plt.hist(residual1, density=True)
 plt.xlabel('Residuals - 5e(i)')
 plt.ylabel('PDF')
 plt.show()
 
 
-plt.figure(figsize=(10,10))
+plt.figure('5e(ii)',figsize=(6,6))
 plt.hist(residual2, density=True)
 plt.xlabel('Residuals - 5e(ii)')
 plt.ylabel('PDF')
 plt.show()
 
-plt.figure(figsize=(10,10))
+plt.figure('5e(iii)',figsize=(6,6))
 plt.hist(residual3, density=True)
 plt.xlabel('Residuals - 5e(iii)')
 plt.ylabel('PDF')
