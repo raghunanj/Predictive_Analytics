@@ -17,16 +17,36 @@ data_needed16 = data_input16[['FG%','ORB','DRB','TRB','PTS']]
 
 def Beta_hatFunction(X,Y):
 	var_x = X.T.dot(X)
-    var_y = X.T.dot(Y)
-    var_x = np.linalg.inv(var_x)
-    beta_hat = var_x.dot(var_y)
-    return(beta_hat)
+	var_y = X.T.dot(Y)
+	var_x = np.linalg.inv(var_x)
+	beta_hat = var_x.dot(var_y)
+	return(beta_hat)
 
 x_axis = np.array(data_needed16[['FG%','TRB']])
 y_axis = np.array(data_needed16[['PTS']])
 Beta_hat = Beta_hatFunction(x_axis,y_axis)
 
-print('Beta_hat:',Beta_hat)
+print('Beta_hat for 5a:',Beta_hat)
+
+
+#######Inference#########
+# TRB contribution of 1.006 is less to PTS when compared to FG% which is 129.63 
+#########################
+
+x_axis = np.array(data_needed16[['FG%','TRB','ORB','DRB']])
+y_axis = np.array(data_needed16[['PTS']])
+Beta_hat = Beta_hatFunction(x_axis,y_axis)
+
+print('Beta_hat for 5b:',Beta_hat)
+
+#######Inference#########
+# TRB contribution is negative in this case. This is caused by the Multicollinearity, 
+# Multicollinearity occurs in this case because we clearly see that ORB + DRB = TRB. 
+
+#########################
+
+
+
 
 '''
 regr = linear_model.LinearRegression()
